@@ -135,7 +135,13 @@ const UserManagementScreen: React.FC = () => {
 
         <Button
           title="Voltar"
-          onPress={() => navigation.goBack()}
+          onPress={() => {
+            if (navigation.canGoBack()) {
+              navigation.goBack();
+            } else {
+              navigation.navigate("AdminDashboard"); // ou qualquer rota segura
+            }
+          }}
           containerStyle={styles.button as ViewStyle}
           buttonStyle={styles.backButton}
         />
