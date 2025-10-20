@@ -54,25 +54,25 @@ const styles = {
   listItem: {
     borderRadius: 8,
     marginVertical: 4,
-    backgroundColor: theme.colors.background,
+    backgroundColor: theme.colors.background.default,
     borderWidth: 1,
-    borderColor: theme.colors.border,
+    borderColor: theme.colors.border.light,
   },
   selectedItem: {
-    backgroundColor: theme.colors.primary + "20",
-    borderColor: theme.colors.primary,
+    backgroundColor: theme.colors.primary.main + "20",
+    borderColor: theme.colors.primary.main,
   },
   avatar: {
-    backgroundColor: theme.colors.primary,
+    backgroundColor: theme.colors.primary.main,
   },
   name: {
     fontSize: 16,
     fontWeight: "bold" as "bold",
-    color: theme.colors.text,
+    color: theme.colors.text.primary,
   },
   specialty: {
     fontSize: 14,
-    color: theme.colors.text,
+    color: theme.colors.text.primary,
     opacity: 0.7,
   },
 };

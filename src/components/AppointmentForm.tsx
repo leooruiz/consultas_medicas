@@ -184,7 +184,7 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({ onSubmit }) => {
         title="Agendar Consulta"
         onPress={handleSubmit}
         buttonStyle={{
-          backgroundColor: theme.colors.primary,
+          backgroundColor: theme.colors.primary.main,
           borderRadius: 8,
           padding: 12,
           marginTop: 20,
@@ -195,28 +195,28 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({ onSubmit }) => {
 };
 
 const Container = styled.View`
-  padding: ${theme.spacing.medium}px;
+  padding: ${theme.spacing.md}px;
 `;
 
 const Title = styled.Text`
-  font-size: ${theme.typography.subtitle.fontSize}px;
-  font-weight: ${theme.typography.subtitle.fontWeight};
-  color: ${theme.colors.text};
-  margin-bottom: ${theme.spacing.medium}px;
+  font-size: ${theme.typography.subtitle1.fontSize}px;
+  font-weight: ${theme.typography.subtitle1.fontWeight};
+  color: ${theme.colors.text.primary};
+  margin-bottom: ${theme.spacing.md}px;
 `;
 
 const DoctorList = styled.ScrollView`
-  margin-bottom: ${theme.spacing.large}px;
+  margin-bottom: ${theme.spacing.lg}px;
 `;
 
 const DoctorCard = styled(TouchableOpacity)<{ selected: boolean }>`
   flex-direction: row;
   align-items: center;
-  padding: ${theme.spacing.medium}px;
+  padding: ${theme.spacing.md}px;
   background-color: ${(props: { selected: boolean }) =>
-    props.selected ? theme.colors.primary : theme.colors.white};
+    props.selected ? theme.colors.primary.main : theme.colors.neutral.white};
   border-radius: 8px;
-  margin-bottom: ${theme.spacing.medium}px;
+  margin-bottom: ${theme.spacing.md}px;
   elevation: 2;
   shadow-color: #000;
   shadow-opacity: 0.1;
@@ -228,7 +228,7 @@ const DoctorImage = styled.Image`
   width: 60px;
   height: 60px;
   border-radius: 30px;
-  margin-right: ${theme.spacing.medium}px;
+  margin-right: ${theme.spacing.md}px;
 `;
 
 const DoctorInfo = styled.View`
@@ -236,31 +236,31 @@ const DoctorInfo = styled.View`
 `;
 
 const DoctorName = styled.Text`
-  font-size: ${theme.typography.subtitle.fontSize}px;
-  font-weight: ${theme.typography.subtitle.fontWeight};
-  color: ${theme.colors.text};
+  font-size: ${theme.typography.subtitle1.fontSize}px;
+  font-weight: ${theme.typography.subtitle1.fontWeight};
+  color: ${theme.colors.text.primary};
 `;
 
 const DoctorSpecialty = styled.Text`
-  font-size: ${theme.typography.body.fontSize}px;
-  color: ${theme.colors.text};
+  font-size: ${theme.typography.body1.fontSize}px;
+  color: ${theme.colors.text.secondary};
   opacity: 0.8;
 `;
 
 const TimeSlotsContainer = styled.View`
-  margin-bottom: ${theme.spacing.large}px;
+  margin-bottom: ${theme.spacing.lg}px;
 `;
 
 const TimeSlotsTitle = styled.Text`
-  font-size: ${theme.typography.body.fontSize}px;
-  color: ${theme.colors.text};
-  margin-bottom: ${theme.spacing.small}px;
+  font-size: ${theme.typography.body1.fontSize}px;
+  color: ${theme.colors.text.primary};
+  margin-bottom: ${theme.spacing.sm}px;
 `;
 
 const TimeSlotsGrid = styled.View`
   flex-direction: row;
   flex-wrap: wrap;
-  gap: ${theme.spacing.small}px;
+  gap: ${theme.spacing.sm}px;
 `;
 
 const TimeSlotButton = styled(TouchableOpacity)<{
@@ -269,41 +269,41 @@ const TimeSlotButton = styled(TouchableOpacity)<{
 }>`
   background-color: ${(props: { selected: boolean; disabled: boolean }) =>
     props.disabled
-      ? theme.colors.background
+      ? theme.colors.background.default
       : props.selected
-      ? theme.colors.primary
-      : theme.colors.white};
-  padding: ${theme.spacing.small}px ${theme.spacing.medium}px;
+      ? theme.colors.primary.main
+      : theme.colors.neutral.white};
+  padding: ${theme.spacing.sm}px ${theme.spacing.md}px;
   border-radius: 8px;
   border-width: 1px;
   border-color: ${(props: { selected: boolean; disabled: boolean }) =>
     props.disabled
-      ? theme.colors.background
+      ? theme.colors.background.default
       : props.selected
-      ? theme.colors.primary
-      : theme.colors.text};
+      ? theme.colors.primary.main
+      : theme.colors.text.primary};
   opacity: ${(props: { disabled: boolean }) => (props.disabled ? 0.5 : 1)};
 `;
 
 const TimeSlotText = styled(Text)<{ selected: boolean; disabled: boolean }>`
-  font-size: ${theme.typography.body.fontSize}px;
+  font-size: ${theme.typography.body1.fontSize}px;
   color: ${(props: { selected: boolean; disabled: boolean }) =>
     props.disabled
-      ? theme.colors.text
+      ? theme.colors.text.disabled
       : props.selected
-      ? theme.colors.white
-      : theme.colors.text};
+      ? theme.colors.neutral.white
+      : theme.colors.text.primary};
 `;
 
 const InputContainer = {
-  marginBottom: theme.spacing.medium,
-  backgroundColor: theme.colors.white,
+  marginBottom: theme.spacing.md,
+  backgroundColor: theme.colors.neutral.white,
   borderRadius: 8,
-  paddingHorizontal: theme.spacing.medium,
+  paddingHorizontal: theme.spacing.md,
 };
 
 const SubmitButton = styled(Button)`
-  margin-top: ${theme.spacing.large}px;
+  margin-top: ${theme.spacing.lg}px;
 `;
 
 export default AppointmentForm;

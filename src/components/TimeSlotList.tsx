@@ -63,10 +63,12 @@ const TimeCard = styled(TouchableOpacity)<StyledProps>`
   padding: 8px;
   border-radius: 6px;
   background-color: ${(props: StyledProps) =>
-    props.isSelected ? theme.colors.primary + "20" : theme.colors.background};
+    props.isSelected
+      ? theme.colors.primary.main + "20"
+      : theme.colors.background.default};
   border-width: 1px;
   border-color: ${(props: StyledProps) =>
-    props.isSelected ? theme.colors.primary : theme.colors.border};
+    props.isSelected ? theme.colors.primary.main : theme.colors.border.light};
   align-items: center;
   justify-content: center;
 `;
@@ -75,7 +77,7 @@ const TimeText = styled.Text<StyledProps>`
   font-size: 12px;
   font-weight: 500;
   color: ${(props: StyledProps) =>
-    props.isSelected ? theme.colors.primary : theme.colors.text};
+    props.isSelected ? theme.colors.primary.main : theme.colors.text.primary};
 `;
 
 export default TimeSlotList;
