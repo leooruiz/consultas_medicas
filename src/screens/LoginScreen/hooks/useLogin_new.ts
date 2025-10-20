@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { useAuth } from "../../../contexts/AuthContext";
 import { useToast } from "../../../hooks/useToast";
-import { ValidationResult } from "../../../utils/validation";
+import {
+  validateEmail as validateEmailUtil,
+  validatePassword as validatePasswordUtil,
+  ValidationResult,
+} from "../../../utils/validation";
 import { LoginFormData } from "../models";
 import { AuthService } from "../services/authService";
 
@@ -34,65 +38,69 @@ export const useLogin = () => {
   const clearErrors = () => {
     setError("");
     setErrors({});
+    setFieldValidations({});
+  };
+
+  const validateEmailField = (email: string) => {
+    const validation = validateEmailUtil(email);
+    setFieldValidations((prev) => ({ ...prev, email: validation }));
+    return validation;
+  };
+
+  const validatePasswordField = (password: string) => {
+    const validation = validatePasswordUtil(password);
+    setFieldValidations((prev) => ({ ...prev, password: validation }));
+    return validation;
   };
 
   const setEmail = (email: string) => {
     updateFormData({ email });
+    // Valida em tempo real
+    if (email.trim()) {
+      validateEmailField(email);
+    } else {
+      setFieldValidations((prev) => ({ ...prev, email: undefined }));
+    }
     // Limpa erros quando usuário começa a digitar
     if (errors.email) {
       setErrors((prev) => ({ ...prev, email: undefined }));
     }
-    if (error) setError("");
   };
 
   const setPassword = (password: string) => {
     updateFormData({ password });
+    // Valida em tempo real
+    if (password.trim()) {
+      validatePasswordField(password);
+    } else {
+      setFieldValidations((prev) => ({ ...prev, password: undefined }));
+    }
     // Limpa erros quando usuário começa a digitar
     if (errors.password) {
       setErrors((prev) => ({ ...prev, password: undefined }));
     }
-    if (error) setError("");
   };
 
-  const validateEmailField = (email: string): string | undefined => {
-    if (!email.trim()) {
-      return "Email é obrigatório";
-    }
-    if (!AuthService.validateEmail(email)) {
-      return "Digite um email válido";
-    }
-    return undefined;
-  };
-
-  const validatePasswordField = (password: string): string | undefined => {
-    if (!password.trim()) {
-      return "Senha é obrigatória";
-    }
-    if (password.length < 6) {
-      return "A senha deve ter pelo menos 6 caracteres";
-    }
-    return undefined;
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   const validateForm = (): boolean => {
-    const { email, password } = formData;
+    const emailValidation = validateEmailField(formData.email);
+    const passwordValidation = validatePasswordField(formData.password);
+
     const newErrors: LoginErrors = {};
 
-    // Validação de email
-    const emailError = validateEmailField(email);
-    if (emailError)
-      newErrors.email = { isValid: false, message: emailError, type: "error" };
+    if (!emailValidation.isValid) {
+      newErrors.email = emailValidation;
+    }
 
-    // Validação de senha
-    const passwordError = validatePasswordField(password);
-    if (passwordError)
-      newErrors.password = {
-        isValid: false,
-        message: passwordError,
-        type: "error",
-      };
+    if (!passwordValidation.isValid) {
+      newErrors.password = passwordValidation;
+    }
 
     setErrors(newErrors);
+
     return Object.keys(newErrors).length === 0;
   };
 
@@ -101,24 +109,28 @@ export const useLogin = () => {
       setLoading(true);
       clearErrors();
 
+      // Validação do formulário
       if (!validateForm()) {
         showError("Por favor, corrija os erros no formulário");
         return false;
       }
 
+      // Tentativa de login
       const result = await AuthService.login(formData);
 
-      if (result.success) {
-        await signIn(formData);
+      if (result.success && result.user) {
+        await signIn(result.user);
         showSuccess("Login realizado com sucesso!");
         return true;
       } else {
-        setError(result.error || "Erro ao fazer login");
-        showError(result.error || "Erro ao fazer login");
+        const errorMessage = result.error || "Credenciais inválidas";
+        setError(errorMessage);
+        showError(errorMessage);
         return false;
       }
-    } catch (err) {
-      const errorMessage = "Email ou senha inválidos";
+    } catch (error: any) {
+      const errorMessage =
+        error.message || "Erro ao fazer login. Tente novamente.";
       setError(errorMessage);
       showError(errorMessage);
       return false;
@@ -128,11 +140,26 @@ export const useLogin = () => {
   };
 
   const getExampleCredentials = () => {
-    return AuthService.getExampleCredentials();
-  };
-
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
+    return [
+      {
+        role: "Paciente",
+        email: "paciente@email.com",
+        password: "123456",
+        description: "Acesso do paciente",
+      },
+      {
+        role: "Médico",
+        email: "medico@email.com",
+        password: "123456",
+        description: "Acesso do médico",
+      },
+      {
+        role: "Admin",
+        email: "admin@email.com",
+        password: "123456",
+        description: "Acesso administrativo",
+      },
+    ];
   };
 
   return {
@@ -140,12 +167,15 @@ export const useLogin = () => {
     loading,
     error,
     errors,
+    fieldValidations,
     showPassword,
+    toast,
+    hideToast,
     setEmail,
     setPassword,
-    handleLogin,
-    getExampleCredentials,
     togglePasswordVisibility,
+    handleLogin,
     clearErrors,
+    getExampleCredentials,
   };
 };

@@ -6,9 +6,14 @@ import {
   Platform,
   ScrollView,
   StatusBar,
+  View,
 } from "react-native";
 import { Button, Input } from "react-native-elements";
+import LoadingSpinner from "../../components/LoadingSpinner";
 import Logo from "../../components/Logo";
+import Toast from "../../components/Toast";
+import ValidationMessage from "../../components/ValidationMessage";
+import { useToast } from "../../hooks/useToast";
 import { RootStackParamList } from "../../types/navigation";
 import CredentialsHint from "./components/CredentialsHint";
 import { useLogin } from "./hooks/useLogin";
@@ -28,15 +33,19 @@ type LoginScreenProps = {
 
 const LoginScreen: React.FC = () => {
   const navigation = useNavigation<LoginScreenProps["navigation"]>();
+  const { toast } = useToast();
 
   const {
     formData,
     loading,
     error,
+    errors,
+    showPassword,
     setEmail,
     setPassword,
     handleLogin,
     getExampleCredentials,
+    togglePasswordVisibility,
   } = useLogin();
 
   const onLogin = async () => {
@@ -72,42 +81,79 @@ const LoginScreen: React.FC = () => {
             </BrandSection>
 
             {/* Formulário de Login */}
-            <Input
-              placeholder="Digite seu email"
-              value={formData.email}
-              onChangeText={setEmail}
-              autoCapitalize="none"
-              keyboardType="email-address"
-              containerStyle={styles.input}
-              leftIcon={{
-                type: "material",
-                name: "email",
-                color: "#1E88E5",
-              }}
-            />
+            <View>
+              <Input
+                placeholder="Digite seu email"
+                value={formData.email}
+                onChangeText={setEmail}
+                autoCapitalize="none"
+                keyboardType="email-address"
+                containerStyle={styles.input}
+                leftIcon={{
+                  type: "material",
+                  name: "email",
+                  color: "#1E88E5",
+                }}
+                errorMessage={errors.email?.message}
+                errorStyle={{ color: "#FF5252" }}
+              />
+              {errors.email && (
+                <ValidationMessage
+                  message={errors.email.message}
+                  type={errors.email.type}
+                  visible={!!errors.email}
+                />
+              )}
+            </View>
 
-            <Input
-              placeholder="Digite sua senha"
-              value={formData.password}
-              onChangeText={setPassword}
-              secureTextEntry
-              containerStyle={styles.input}
-              leftIcon={{
-                type: "material",
-                name: "lock",
-                color: "#1E88E5",
-              }}
-            />
+            <View>
+              <Input
+                placeholder="Digite sua senha"
+                value={formData.password}
+                onChangeText={setPassword}
+                secureTextEntry={!showPassword}
+                containerStyle={styles.input}
+                leftIcon={{
+                  type: "material",
+                  name: "lock",
+                  color: "#1E88E5",
+                }}
+                rightIcon={{
+                  type: "material",
+                  name: showPassword ? "visibility" : "visibility-off",
+                  color: "#1E88E5",
+                  onPress: () => togglePasswordVisibility(),
+                }}
+                errorMessage={errors.password?.message}
+                errorStyle={{ color: "#FF5252" }}
+              />
+              {errors.password && (
+                <ValidationMessage
+                  message={errors.password.message}
+                  type={errors.password.type}
+                  visible={!!errors.password}
+                />
+              )}
+            </View>
 
             {error ? <ErrorText>{error}</ErrorText> : null}
 
             <Button
-              title="ENTRAR"
+              title={loading ? "ENTRANDO..." : "ENTRAR"}
               onPress={onLogin}
               loading={loading}
+              disabled={loading}
               containerStyle={styles.button}
-              buttonStyle={styles.buttonStyle}
+              buttonStyle={[
+                styles.buttonStyle,
+                loading && { backgroundColor: "#90CAF9" },
+              ]}
               titleStyle={{ fontWeight: "600", letterSpacing: 1 }}
+              icon={
+                loading ? (
+                  <LoadingSpinner size="small" color="#FFF" />
+                ) : undefined
+              }
             />
 
             <Button
@@ -123,6 +169,16 @@ const LoginScreen: React.FC = () => {
           </WelcomeContainer>
         </ScrollView>
       </KeyboardAvoidingView>
+
+      {/* Toast para feedback visual */}
+      {toast.visible && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          visible={toast.visible}
+          onHide={() => {}}
+        />
+      )}
     </Container>
   );
 };

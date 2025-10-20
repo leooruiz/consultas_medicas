@@ -80,13 +80,40 @@ export const authService = {
     // Verifica se é um paciente registrado
     const patient = registeredUsers.find((p) => p.email === credentials.email);
     if (patient) {
-      // Para pacientes, a senha padrão é 123456
-      if (credentials.password === "123456") {
+      // Verificar senha real do paciente (caso tenha uma propriedade password)
+      if ((patient as any).password === credentials.password) {
         return {
           user: patient,
           token: `patient-token-${patient.id}`,
         };
       }
+    }
+
+    // Verificar nos usuários salvos no AsyncStorage também
+    try {
+      const storedUsers = await AsyncStorage.getItem("@MedicalApp:users");
+      if (storedUsers) {
+        const users = JSON.parse(storedUsers);
+        const storedUser = users.find(
+          (u: any) => u.email === credentials.email
+        );
+        if (storedUser && storedUser.password === credentials.password) {
+          return {
+            user: {
+              id: storedUser.id,
+              name: storedUser.name,
+              email: storedUser.email,
+              role: storedUser.role || "patient",
+              image:
+                storedUser.image ||
+                "https://randomuser.me/api/portraits/lego/1.jpg",
+            },
+            token: `patient-token-${storedUser.id}`,
+          };
+        }
+      }
+    } catch (error) {
+      console.error("Erro ao verificar usuários salvos:", error);
     }
 
     throw new Error("Email ou senha inválidos");

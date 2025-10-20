@@ -51,7 +51,11 @@ const BrandedHeader: React.FC<BrandedHeaderProps> = ({
   return (
     <>
       <StatusBar
-        backgroundColor={variantStyles.backgroundColor}
+        backgroundColor={
+          typeof variantStyles.backgroundColor === "string"
+            ? variantStyles.backgroundColor
+            : "#1E88E5"
+        }
         barStyle={variant === "clean" ? "dark-content" : "light-content"}
       />
       <SafeAreaView
