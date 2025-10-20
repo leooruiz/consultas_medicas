@@ -1,50 +1,168 @@
-# Welcome to your Expo app 👋
+# 🏥 Sistema de Consultas Médicas
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Um aplicativo móvel desenvolvido em React Native com Expo para gerenciamento de consultas médicas, permitindo agendamento, acompanhamento e administração de consultas entre pacientes, médicos e administradores.
 
-## Get started
+## 📱 Sobre o Projeto
 
-1. Install dependencies
+O Sistema de Consultas Médicas é uma aplicação completa que oferece uma interface intuitiva para:
+
+- **Pacientes**: Agendar consultas, visualizar histórico e gerenciar perfil
+- **Médicos**: Visualizar agenda, gerenciar consultas e atualizar perfil profissional  
+- **Administradores**: Gerenciar usuários, supervisionar sistema e relatórios
+
+### 🎯 Funcionalidades Principais
+
+- ✅ **Autenticação Multi-Perfil**: Login diferenciado para pacientes, médicos e administradores
+- ✅ **Agendamento de Consultas**: Interface intuitiva para marcar consultas com médicos disponíveis
+- ✅ **Gerenciamento de Perfis**: Visualização e edição de informações pessoais e profissionais
+- ✅ **Dashboard Personalizado**: Telas específicas para cada tipo de usuário
+- ✅ **Sistema de Navegação**: Navegação fluida entre telas com React Navigation
+- ✅ **Identidade Visual Médica**: Marca **MedConnect** com paleta de cores e tipografia profissional
+
+### 🏗️ Arquitetura Modular
+
+O projeto segue um padrão modular avançado para melhor organização e manutenibilidade:
+
+```text
+src/screens/[NomeDaTela]/
+├── index.tsx           # Componente principal
+├── styles.ts          # Estilos organizados
+├── components/        # Componentes específicos
+├── hooks/            # Hooks customizados
+├── services/         # Lógica de negócio
+└── models/           # Tipos e interfaces
+```
+
+**Telas Refatoradas (Padrão Modular):**
+
+- `CreateAppointmentScreen/` - Sistema de agendamento modular
+- `ProfileScreen/` - Gerenciamento de perfil componentizado  
+- `LoginScreen/` - Autenticação com validações separadas
+
+## 👥 Integrantes
+
+| Nome | RM |
+|------|-----|
+| Leonardo de Oliveira Ruiz | RM98901 |
+| Guilherme Alves | RM550433 |
+| Bruno Venturi Lopes Vieira | RM99431 |
+| João Gabriel Dias | RM99092 |
+| Ricardo Mattos | RM95906 |
+
+## 🚀 Tecnologias Utilizadas
+
+- **React Native** - Framework para desenvolvimento mobile
+- **Expo** - Plataforma de desenvolvimento e build
+- **TypeScript** - Tipagem estática para JavaScript
+- **React Navigation** - Navegação entre telas
+- **Styled Components** - Estilização CSS-in-JS
+- **AsyncStorage** - Persistência local de dados
+- **React Native Elements** - Biblioteca de componentes UI
+
+## 📦 Instalação e Execução
+
+### Pré-requisitos
+
+- Node.js 16+
+- npm ou yarn
+- Expo CLI
+
+### Passos para execução
+
+1. **Clone o repositório**
+
+   ```bash
+   git clone https://github.com/leooruiz/consultas_medicas.git
+   cd consultas_medicas
+   ```
+
+2. **Instale as dependências**
 
    ```bash
    npm install
    ```
 
-2. Start the app
+3. **Execute o projeto**
 
    ```bash
    npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+4. **Abra no dispositivo**
+   - Escaneie o QR Code com o app Expo Go (Android/iOS)
+   - Ou use um emulador Android/iOS
+   - Ou execute no navegador web
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## 🔐 Credenciais de Teste
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+### Administrador
 
-## Get a fresh project
+- **Email**: `admin@example.com`
+- **Senha**: `123456`
 
-When you're ready, run:
+### Médicos
 
-```bash
-npm run reset-project
+- **Dr. João Silva**: `joao@example.com` / `123456`
+- **Dra. Maria Santos**: `maria@example.com` / `123456`  
+- **Dr. Pedro Oliveira**: `pedro@example.com` / `123456`
+
+### Pacientes
+
+Crie uma conta através da tela de registro ou entre em contato com um administrador.
+
+## 📁 Estrutura do Projeto
+
+```text
+src/
+├── components/          # Componentes reutilizáveis
+├── contexts/           # Context API (AuthContext)
+├── navigation/         # Configuração de rotas
+├── screens/           # Telas da aplicação
+│   ├── LoginScreen/           # 🔧 Modular
+│   ├── ProfileScreen/         # 🔧 Modular  
+│   ├── CreateAppointmentScreen/ # 🔧 Modular
+│   └── [outras-telas].tsx     # Formato tradicional
+├── services/          # Serviços e APIs
+├── styles/           # Temas e estilos globais
+└── types/           # Definições TypeScript
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## 🎨 Identidade Visual e Design System
 
-## Learn more
+### 🏥 **Marca: MedConnect**
 
-To learn more about developing your project with Expo, look at the following resources:
+- **Nome**: MedConnect - "Conectando cuidados, transformando vidas"
+- **Logotipo**: Cruz médica estilizada com círculo de proteção
+- **Filosofia**: Confiança, profissionalismo e cuidado humanizado
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+### 🎨 **Paleta de Cores Médica**
 
-## Join the community
+- **Azul Médico Primário**: `#1E88E5` - Confiança e profissionalismo
+- **Verde Saúde Secundário**: `#43A047` - Vida e bem-estar  
+- **Azul Turquesa Accent**: `#00ACC1` - Clareza e higiene
+- **Neutros Profissionais**: Escala de cinzas para legibilidade
 
-Join our community of developers creating universal apps.
+### ✍️ **Tipografia Hierárquica**
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- **Família**: System (Roboto/SF Pro)
+- **Pesos**: 400 (Regular), 500 (Medium), 600 (Semi-bold), 700 (Bold)
+- **Contextos Médicos**: Estilos específicos para nomes de pacientes, médicos e especialidades
+
+### 📏 **Sistema de Espaçamento**
+
+- **Escala 8pt**: 4px, 8px, 16px, 24px, 32px, 48px
+- **Componentes**: Cards, botões e inputs com bordas arredondadas
+- **Sombras**: Sistema de elevação para hierarquia visual
+
+## 🔄 Funcionalidades Futuras
+
+- [ ] Notificações push para lembretes
+- [ ] Integração com calendário do dispositivo
+- [ ] Chat entre médico e paciente
+- [ ] Histórico médico completo
+- [ ] Integração com sistemas hospitalares
+- [ ] Telemedicina (consultas por vídeo)
+
+## 📄 Licença
+
+Este projeto foi desenvolvido para fins educacionais como parte do curso de desenvolvimento mobile.

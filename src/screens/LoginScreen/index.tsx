@@ -1,11 +1,26 @@
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React from "react";
+import {
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StatusBar,
+} from "react-native";
 import { Button, Input } from "react-native-elements";
+import Logo from "../../components/Logo";
 import { RootStackParamList } from "../../types/navigation";
 import CredentialsHint from "./components/CredentialsHint";
 import { useLogin } from "./hooks/useLogin";
-import { Container, ErrorText, styles, Title } from "./styles";
+import {
+  BrandSection,
+  Container,
+  ErrorText,
+  styles,
+  Subtitle,
+  Title,
+  WelcomeContainer,
+} from "./styles";
 
 type LoginScreenProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, "Login">;
@@ -31,45 +46,84 @@ const LoginScreen: React.FC = () => {
 
   return (
     <Container>
-      <Title>Login</Title>
+      <StatusBar backgroundColor="#1E88E5" barStyle="light-content" />
 
-      <Input
-        placeholder="Email"
-        value={formData.email}
-        onChangeText={setEmail}
-        autoCapitalize="none"
-        keyboardType="email-address"
-        containerStyle={styles.input}
-      />
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <ScrollView
+          contentContainerStyle={{ flexGrow: 1 }}
+          keyboardShouldPersistTaps="handled"
+        >
+          <WelcomeContainer>
+            {/* Seção da Marca */}
+            <BrandSection>
+              <Logo
+                size="large"
+                variant="vertical"
+                color="primary"
+                showTagline={true}
+              />
+              <Title>Bem-vindo ao MedConnect</Title>
+              <Subtitle>
+                Acesse sua conta para gerenciar suas consultas médicas
+              </Subtitle>
+            </BrandSection>
 
-      <Input
-        placeholder="Senha"
-        value={formData.password}
-        onChangeText={setPassword}
-        secureTextEntry
-        containerStyle={styles.input}
-      />
+            {/* Formulário de Login */}
+            <Input
+              placeholder="Digite seu email"
+              value={formData.email}
+              onChangeText={setEmail}
+              autoCapitalize="none"
+              keyboardType="email-address"
+              containerStyle={styles.input}
+              leftIcon={{
+                type: "material",
+                name: "email",
+                color: "#1E88E5",
+              }}
+            />
 
-      {error ? <ErrorText>{error}</ErrorText> : null}
+            <Input
+              placeholder="Digite sua senha"
+              value={formData.password}
+              onChangeText={setPassword}
+              secureTextEntry
+              containerStyle={styles.input}
+              leftIcon={{
+                type: "material",
+                name: "lock",
+                color: "#1E88E5",
+              }}
+            />
 
-      <Button
-        title="Entrar"
-        onPress={onLogin}
-        loading={loading}
-        containerStyle={styles.button}
-        buttonStyle={styles.buttonStyle}
-      />
+            {error ? <ErrorText>{error}</ErrorText> : null}
 
-      <Button
-        title="Cadastrar Novo Paciente"
-        onPress={() => navigation.navigate("Register")}
-        containerStyle={styles.registerButton}
-        buttonStyle={styles.registerButtonStyle}
-      />
+            <Button
+              title="ENTRAR"
+              onPress={onLogin}
+              loading={loading}
+              containerStyle={styles.button}
+              buttonStyle={styles.buttonStyle}
+              titleStyle={{ fontWeight: "600", letterSpacing: 1 }}
+            />
 
-      <CredentialsHint credentials={getExampleCredentials()} />
+            <Button
+              title="CADASTRAR NOVO PACIENTE"
+              onPress={() => navigation.navigate("Register")}
+              containerStyle={styles.registerButton}
+              buttonStyle={styles.registerButtonStyle}
+              titleStyle={{ fontWeight: "600", letterSpacing: 1 }}
+            />
+
+            {/* Dicas de credenciais */}
+            <CredentialsHint credentials={getExampleCredentials()} />
+          </WelcomeContainer>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </Container>
   );
 };
-
 export default LoginScreen;
