@@ -5,7 +5,7 @@ import { ViewStyle } from "react-native";
 import { Button, Input } from "react-native-elements";
 import styled from "styled-components/native";
 import { useAuth } from "../contexts/AuthContext";
-import theme from "../styles/theme";
+import legacyTheme from "../styles/legacyTheme";
 import { RootStackParamList } from "../types/navigation";
 
 type RegisterScreenProps = {
@@ -104,7 +104,7 @@ const styles = {
     width: "100%",
   },
   buttonStyle: {
-    backgroundColor: theme.colors.primary,
+    backgroundColor: legacyTheme.colors.primary,
     paddingVertical: 12,
   },
   backButton: {
@@ -112,7 +112,7 @@ const styles = {
     width: "100%",
   },
   backButtonStyle: {
-    backgroundColor: theme.colors.secondary,
+    backgroundColor: legacyTheme.colors.secondary,
     paddingVertical: 12,
   },
 };
@@ -121,7 +121,7 @@ const Container = styled.View`
   flex: 1;
   padding: 20px;
   justify-content: center;
-  background-color: ${theme.colors.background};
+  background-color: ${legacyTheme.colors.background};
 `;
 
 const Title = styled.Text`
@@ -129,11 +129,11 @@ const Title = styled.Text`
   font-weight: bold;
   text-align: center;
   margin-bottom: 30px;
-  color: ${theme.colors.text};
+  color: ${legacyTheme.colors.text};
 `;
 
 const ErrorText = styled.Text`
-  color: ${theme.colors.error};
+  color: ${legacyTheme.colors.error};
   text-align: center;
   margin-bottom: 10px;
 `;

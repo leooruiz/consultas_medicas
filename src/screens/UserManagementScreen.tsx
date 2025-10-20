@@ -7,7 +7,7 @@ import { Button, ListItem } from "react-native-elements";
 import styled from "styled-components/native";
 import Header from "../components/Header";
 import { useAuth } from "../contexts/AuthContext";
-import theme from "../styles/theme";
+import legacyTheme from "../styles/legacyTheme";
 import { RootStackParamList } from "../types/navigation";
 
 type UserManagementScreenProps = {
@@ -159,11 +159,11 @@ const styles = {
     width: "100%",
   },
   buttonStyle: {
-    backgroundColor: theme.colors.primary,
+    backgroundColor: legacyTheme.colors.primary,
     paddingVertical: 12,
   },
   backButton: {
-    backgroundColor: theme.colors.secondary,
+    backgroundColor: legacyTheme.colors.secondary,
     paddingVertical: 12,
   },
   actionButton: {
@@ -171,57 +171,57 @@ const styles = {
     width: "48%",
   },
   editButton: {
-    backgroundColor: theme.colors.primary,
+    backgroundColor: legacyTheme.colors.primary,
     paddingVertical: 8,
   },
   deleteButton: {
-    backgroundColor: theme.colors.error,
+    backgroundColor: legacyTheme.colors.error,
     paddingVertical: 8,
   },
   userName: {
     fontSize: 18,
     fontWeight: "700",
-    color: theme.colors.text,
+    color: legacyTheme.colors.text,
   },
   userEmail: {
     fontSize: 14,
-    color: theme.colors.text,
+    color: legacyTheme.colors.text,
     marginTop: 4,
   },
 };
 
 const Container = styled.View`
   flex: 1;
-  background-color: ${theme.colors.background};
+  background-color: ${legacyTheme.colors.background};
 `;
 
 const Title = styled.Text`
   font-size: 24px;
   font-weight: bold;
-  color: ${theme.colors.text};
+  color: ${legacyTheme.colors.text};
   margin-bottom: 20px;
   text-align: center;
 `;
 
 const UserCard = styled(ListItem)`
-  background-color: ${theme.colors.background};
+  background-color: ${legacyTheme.colors.background};
   border-radius: 8px;
   margin-bottom: 10px;
   padding: 15px;
   border-width: 1px;
-  border-color: ${theme.colors.border};
+  border-color: ${legacyTheme.colors.border};
 `;
 
 const LoadingText = styled.Text`
   text-align: center;
-  color: ${theme.colors.text};
+  color: ${legacyTheme.colors.text};
   font-size: 16px;
   margin-top: 20px;
 `;
 
 const EmptyText = styled.Text`
   text-align: center;
-  color: ${theme.colors.text};
+  color: ${legacyTheme.colors.text};
   font-size: 16px;
   margin-top: 20px;
 `;
@@ -230,11 +230,11 @@ const RoleBadge = styled.View<StyledProps>`
   background-color: ${(props: StyledProps) => {
     switch (props.role) {
       case "admin":
-        return theme.colors.primary + "20";
+        return legacyTheme.colors.primary + "20";
       case "doctor":
-        return theme.colors.success + "20";
+        return legacyTheme.colors.success + "20";
       default:
-        return theme.colors.secondary + "20";
+        return legacyTheme.colors.secondary + "20";
     }
   }};
   padding: 4px 8px;
@@ -247,11 +247,11 @@ const RoleText = styled.Text<StyledProps>`
   color: ${(props: StyledProps) => {
     switch (props.role) {
       case "admin":
-        return theme.colors.primary;
+        return legacyTheme.colors.primary;
       case "doctor":
-        return theme.colors.success;
+        return legacyTheme.colors.success;
       default:
-        return theme.colors.secondary;
+        return legacyTheme.colors.secondary;
     }
   }};
   font-size: 12px;

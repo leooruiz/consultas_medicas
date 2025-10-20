@@ -6,7 +6,7 @@ import React, { useState } from "react";
 import { FlatList, RefreshControl, TouchableOpacity } from "react-native";
 import { Button, Icon } from "react-native-elements";
 import styled from "styled-components/native";
-import theme from "../styles/theme";
+import legacyTheme from "../styles/legacyTheme";
 import { Appointment } from "../types/appointments";
 import { Doctor } from "../types/doctors";
 import { RootStackParamList } from "../types/navigation";
@@ -93,7 +93,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
                 name="edit"
                 type="material"
                 size={20}
-                color={theme.colors.primary}
+                color={legacyTheme.colors.primary}
               />
             </ActionButton>
             <ActionButton>
@@ -101,7 +101,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
                 name="delete"
                 type="material"
                 size={20}
-                color={theme.colors.error}
+                color={legacyTheme.colors.error}
               />
             </ActionButton>
           </ActionButtons>
@@ -124,10 +124,10 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
             />
           }
           buttonStyle={{
-            backgroundColor: theme.colors.primary,
+            backgroundColor: legacyTheme.colors.primary,
             borderRadius: 8,
             padding: 12,
-            marginBottom: theme.spacing.medium,
+            marginBottom: legacyTheme.spacing.medium,
           }}
           onPress={() => navigation.navigate("CreateAppointment")}
         />
@@ -148,12 +148,12 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 
 const Container = styled.View`
   flex: 1;
-  background-color: ${theme.colors.background};
+  background-color: ${legacyTheme.colors.background};
 `;
 
 const Content = styled.View`
   flex: 1;
-  padding: ${theme.spacing.medium}px;
+  padding: ${legacyTheme.spacing.medium}px;
 `;
 
 const AppointmentList = styled(FlatList)`
@@ -161,10 +161,10 @@ const AppointmentList = styled(FlatList)`
 `;
 
 const AppointmentCard = styled.View`
-  background-color: ${theme.colors.white};
+  background-color: ${legacyTheme.colors.white};
   border-radius: 8px;
-  padding: ${theme.spacing.medium}px;
-  margin-bottom: ${theme.spacing.medium}px;
+  padding: ${legacyTheme.spacing.medium}px;
+  margin-bottom: ${legacyTheme.spacing.medium}px;
   flex-direction: row;
   align-items: center;
   elevation: 2;
@@ -178,7 +178,7 @@ const DoctorImage = styled.Image`
   width: 60px;
   height: 60px;
   border-radius: 30px;
-  margin-right: ${theme.spacing.medium}px;
+  margin-right: ${legacyTheme.spacing.medium}px;
 `;
 
 const InfoContainer = styled.View`
@@ -186,35 +186,37 @@ const InfoContainer = styled.View`
 `;
 
 const DoctorName = styled.Text`
-  font-size: ${theme.typography.subtitle.fontSize}px;
-  font-weight: ${theme.typography.subtitle.fontWeight};
-  color: ${theme.colors.text};
+  font-size: ${legacyTheme.typography.subtitle.fontSize}px;
+  font-weight: ${legacyTheme.typography.subtitle.fontWeight};
+  color: ${legacyTheme.colors.text};
 `;
 
 const DoctorSpecialty = styled.Text`
-  font-size: ${theme.typography.body.fontSize}px;
-  color: ${theme.colors.text};
+  font-size: ${legacyTheme.typography.body.fontSize}px;
+  color: ${legacyTheme.colors.text};
   opacity: 0.8;
   margin-bottom: 4px;
 `;
 
 const DateTime = styled.Text`
-  font-size: ${theme.typography.body.fontSize}px;
-  color: ${theme.colors.primary};
+  font-size: ${legacyTheme.typography.body.fontSize}px;
+  color: ${legacyTheme.colors.primary};
   margin-top: 4px;
 `;
 
 const Description = styled.Text`
-  font-size: ${theme.typography.body.fontSize}px;
-  color: ${theme.colors.text};
+  font-size: ${legacyTheme.typography.body.fontSize}px;
+  color: ${legacyTheme.colors.text};
   opacity: 0.8;
   margin-top: 4px;
 `;
 
 const Status = styled.Text<{ status: string }>`
-  font-size: ${theme.typography.body.fontSize}px;
+  font-size: ${legacyTheme.typography.body.fontSize}px;
   color: ${(props: { status: string }) =>
-    props.status === "pending" ? theme.colors.error : theme.colors.success};
+    props.status === "pending"
+      ? legacyTheme.colors.error
+      : legacyTheme.colors.success};
   margin-top: 4px;
   font-weight: bold;
 `;
@@ -222,19 +224,19 @@ const Status = styled.Text<{ status: string }>`
 const ActionButtons = styled.View`
   flex-direction: row;
   justify-content: flex-end;
-  margin-top: ${theme.spacing.small}px;
+  margin-top: ${legacyTheme.spacing.small}px;
 `;
 
 const ActionButton = styled(TouchableOpacity)`
-  padding: ${theme.spacing.small}px;
-  margin-left: ${theme.spacing.small}px;
+  padding: ${legacyTheme.spacing.small}px;
+  margin-left: ${legacyTheme.spacing.small}px;
 `;
 
 const EmptyText = styled.Text`
   text-align: center;
-  color: ${theme.colors.text};
+  color: ${legacyTheme.colors.text};
   opacity: 0.6;
-  margin-top: ${theme.spacing.large}px;
+  margin-top: ${legacyTheme.spacing.large}px;
 `;
 
 export default HomeScreen;
